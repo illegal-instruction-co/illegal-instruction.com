@@ -4,6 +4,7 @@ import Markdown  from 'react-markdown';
 
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
 
 import { useEffect, useState } from "react";
 
@@ -11,17 +12,21 @@ export default function Blog() {
     const [gits, setGits] = useState([]);
 
     useEffect(() => {
-        fetch(`https://api.github.com/users/${config.git_user}/gists`)
-            .then((response) => response.json())
-            .then((data) => {
-                for (let i = 0; i < data.length; i++) {
-                    fetch(data[i].url)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            setGits((prev) => [...prev, data]);
-                        });
-                }
-            });
+        if (!config.git_user)
+            return;
+        
+        if (!gits.length)
+            fetch(`https://api.github.com/users/${config.git_user}/gists`)
+                .then((response) => response.json())
+                .then((data) => {
+                    for (let i = 0; i < data.length; i++) {
+                        fetch(data[i].url)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                setGits((prev) => [...prev, data]);
+                            });
+                    }
+                });
     }, []);
 
     return (
@@ -56,8 +61,8 @@ export default function Blog() {
                             <hr />
                             
                             <Markdown 
-                                remarkPlugins={[remarkGfm]}
-                                rehypePlugins={[remarkRehype]}
+                                remarkPlugins={[remarkGfm, remarkRehype]}
+                                rehypePlugins={[rehypeRaw]}
                             >
                                 {git.files[Object.keys(git.files)[0]].content}
                             </Markdown>

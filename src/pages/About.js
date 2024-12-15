@@ -4,6 +4,7 @@ import Markdown  from 'react-markdown';
 
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
 
 import { useEffect, useState } from 'react';
 
@@ -32,8 +33,8 @@ export default function About() {
                 margin: 'auto',
             }}>
                 <Markdown 
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[remarkRehype]}
+                    remarkPlugins={[remarkGfm, remarkRehype]}
+                    rehypePlugins={[rehypeRaw]}
                 >{aboutMd}</Markdown>
             </div>
         </>

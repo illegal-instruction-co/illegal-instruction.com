@@ -1,8 +1,9 @@
 import config from '../config.json';
 
-import Markdown  from 'react-markdown';
+import Markdown from 'react-markdown';
 
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import remarkRehype from 'remark-rehype';
 
 import { useEffect, useState } from 'react';
@@ -31,10 +32,12 @@ export default function Home() {
                 whiteSpace: 'pre-wrap',
                 margin: 'auto',
             }}>
-                <Markdown 
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[remarkRehype]}
-                >{homeMd}</Markdown>
+                <Markdown
+                    remarkPlugins={[remarkGfm, remarkRehype]}
+                    rehypePlugins={[rehypeRaw]}
+                >
+                    {homeMd}
+                </Markdown>
             </div>
         </>
     );

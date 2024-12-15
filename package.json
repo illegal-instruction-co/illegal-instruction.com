@@ -9,6 +9,7 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^7.0.2",
     "react-scripts": "5.0.1",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-rehype": "^11.1.1"
   },
